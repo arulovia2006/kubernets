@@ -1,0 +1,44 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-web
+  namespace: devops-lab
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-web
+  template:
+    metadata:
+      labels:
+        app: devops-web
+    spec:
+      containers:
+        - name: web
+          image: arulovia/devops-lab-web:v2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: APP_TITLE
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-web-config
+                  key: APP_TITLE
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-web-config
+                  key: APP_VERSION
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: devops-web-config
+                  key: APP_MESSAGE
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5

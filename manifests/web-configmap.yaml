@@ -1,0 +1,10 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devops-web-config
+  namespace: devops-lab
+data:
+  APP_TITLE: "DevOps Lab Dashboard"
+  APP_VERSION: "Version 2 - ConfigMap"
+  APP_MESSAGE: "Configured using Kubernetes ConfigMap and deployed through Jenkins."
